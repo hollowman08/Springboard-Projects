@@ -14,9 +14,10 @@ colnames(strdist) <- codes
 rownames(strdist) <- company
 a <- amatch(company, codes, maxDist = 4)
 refine_df <- data.frame(rawtext = company, company_name = codes[a])
+refine_dfd <- distinct(refine_df)
 
 ## Add standardized columns to original data
-refine1 <- cbind(refine, refine_df)
+refine1 <- left_join(refine, refine_dfd, by = c("company" = "rawtext"))
 refine_tbl <- tbl_df(refine1)
 
 ## Split proudct code and product number into two columns
@@ -38,11 +39,11 @@ refine_tbl4 <- refine_tbl3 %>%
      spread(companies, companies) %>% 
      spread(product_categories, product_categories)
 
-refine_tbl4[,9:16] <- ifelse(!is.na(refine_tbl4[,9:16]),1,0)
+refine_tbl4[,8:15] <- ifelse(!is.na(refine_tbl4[,8:15]),1,0)
 
 refine_final <- refine_tbl4 %>% 
      select(company_name, `product code`, `product number`, full_address, name
-            ,product_category, 9:16)
+            ,product_category, 8:15)
 
 ## write to CSV file
 write.csv(refine_final, "refine_clean.csv")
