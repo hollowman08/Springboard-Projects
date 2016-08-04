@@ -1,5 +1,5 @@
-# Springboard-Projects
-Storage for Springboard Projects and Assignments
+# Data Wrangling Exercise 1: Basic Data Manipulation 
+
 
 Exercise
 
