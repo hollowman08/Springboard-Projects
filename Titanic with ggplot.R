@@ -1,10 +1,14 @@
 suppressMessages(library(dplyr))
 suppressMessages(library(data.table))
 library(tidyr)
+library(readr)
 
 ##Load titanic_original dataset
-titanic <- fread("titanic_original.csv")
+titanic <- read_csv("titanic_original.csv")
 
+##Remove mystery row
+titanic_mr <- !is.na(titanic$pclass )
+titanic <- titanic[titanic_mr]
 ##Explore dataset
 head(titanic)
 tail(titanic)
